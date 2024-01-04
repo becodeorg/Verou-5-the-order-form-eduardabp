@@ -9,24 +9,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" type="text/css"
           rel="stylesheet"/>
-    <title>Your fancy store</title>
+    <title>Shop from the Future</title>
 </head>
 <body>
 <div class="container">
     <h1>Place your order</h1>
-    <?php // Navigation for when you need it ?>
-    <?php /*
-    <nav>
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link active" href="?food=1">Order food</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="?food=0">Order drinks</a>
-            </li>
-        </ul>
-    </nav>
-    */ ?>
+
     <form method="POST">
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -74,7 +62,7 @@
         <button type="submit" class="btn btn-primary">Order!</button>
     </form>
 
-    <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in food and drinks.</footer>
+    <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in futuristic gadgets.</footer>
 </div>
 
 <style>
