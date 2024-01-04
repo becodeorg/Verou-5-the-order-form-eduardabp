@@ -23,14 +23,14 @@ function whatIsHappening() {
 
 // TODO: provide some products (you may overwrite the example)
 $products = [
-    ['name' => 'Sonic Screwdriver', 'price' => 399,99],
-    ['name' => 'Self-lacing Shoes', 'price' => 249,99],
-    ['name' => 'Proton Pack', 'price' => 99,99],
-    ['name' => 'What-If Machine', 'price' => 799,99],
-    ['name' => 'Tricorder', 'price' => 149,99],
-    ['name' => 'Point-of-View Gun', 'price' => 129,99],
-    ['name' => 'Neuralyzer', 'price' => 549,99],
-    ['name' => 'Carbonite Freezing', 'price' => 499,99],
+    ['name' => 'Sonic Screwdriver', 'price' => 399.99],
+    ['name' => 'Self-lacing Shoes', 'price' => 249.99],
+    ['name' => 'Proton Pack', 'price' => 99.99],
+    ['name' => 'What-If Machine', 'price' => 799.99],
+    ['name' => 'Tricorder', 'price' => 149.99],
+    ['name' => 'Point-of-View Gun', 'price' => 129.99],
+    ['name' => 'Neuralyzer', 'price' => 549.99],
+    ['name' => 'Carbonite Freezing', 'price' => 499.99],
 ];
 
 $totalValue = 0;
@@ -44,19 +44,24 @@ function validate()
 function handleForm()
 {
     // TODO: form related tasks (step 1)
-
-    // Validation (step 2)
-    $invalidFields = validate();
-    if (!empty($invalidFields)) {
+         // Validation (step 2)
+            $invalidFields = validate();
+            $items = [];
+            $address = "";
+            if (!empty($invalidFields)) {
         // TODO: handle errors
-    } else {
+            } else {
         // TODO: handle successful submission
-    }
-}
+                $address = filter_input(INPUT_POST, "street") . " " . filter_input(INPUT_POST, "streetnumber") . "<br>" . filter_input(INPUT_POST, "city") . " " . filter_input(INPUT_POST, "zipcode");
+                echo "<h3>Your order is confirmed!</h3><br><h4>What you ordered: </h4><br>";
+                foreach ($items as $i => $item): 
+                    echo "<ul><li>" . $item . "</li></ul>";
+                endforeach;
+                echo "<h4>Your address:</h4><p>" . $address ."</p><br><h3>Thank you for shopping with us! See you in the future!</h3>";
+    }}
 
 // TODO: replace this if by an actual check for the form to be submitted
-$formSubmitted = false;
-if ($formSubmitted) {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     handleForm();
 }
 
