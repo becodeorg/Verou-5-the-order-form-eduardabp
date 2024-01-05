@@ -1,9 +1,5 @@
 <?php
 
-// This file is your starting point (= since it's the index)
-// It will contain most of the logic, to prevent making a messy mix in the html
-
-// This line makes PHP behave in a more strict way
 declare(strict_types=1);
 
 ini_set('display_errors', '1');
@@ -25,7 +21,6 @@ function whatIsHappening() {
     var_dump($_SESSION);
 }
 
-// TODO: provide some products (you may overwrite the example)
 $products = [
     ['name' => 'Sonic Screwdriver', 'price' => 399.99],
     ['name' => 'Self-lacing Shoes', 'price' => 249.99],
@@ -54,6 +49,11 @@ function handleForm()
             $items = [];
             $address = "";
             if (!empty($invalidFields)) {
+                echo "<div class='alert alert-warning' role='alert'><p>Please fill the required fields: <p><ul>";
+                foreach ($invalidFields as $i => $field):
+                    echo "<li>". $field ."</li>";
+                endforeach;
+                echo "</ul></div>";
             } else {
         // TODO: handle successful submission
                 $address = filter_input(INPUT_POST, "street") . " " . filter_input(INPUT_POST, "streetnumber") . "<br>" . filter_input(INPUT_POST, "city") . " " . filter_input(INPUT_POST, "zipcode");
@@ -62,11 +62,11 @@ function handleForm()
                         array_push($items, $product['name']);
                     }
                 endforeach;
-                echo "<h3>Your order is confirmed!</h3><br><h4>What you ordered: </h4><br><ul>";
+                echo "<div class='alert alert-success' role='alert'><h3>Your order is confirmed!</h3><br><h4>What you ordered: </h4><br><ul>";
                 foreach ($items as $i => $item): 
                     echo "<li>" . $item . "</li>";
                 endforeach;
-                echo "</ul><h4>Your address:</h4><p>" . $address ."</p><br><h3>Thank you for shopping with us! See you in the future!</h3>";
+                echo "</ul><h4>Your address:</h4><p>" . $address ."</p><br><h3>Thank you for shopping with us! See you in the future!</h3></div>";
     }}
 
 // TODO: replace this if by an actual check for the form to be submitted
