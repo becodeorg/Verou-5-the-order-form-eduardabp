@@ -6,6 +6,10 @@
 // This line makes PHP behave in a more strict way
 declare(strict_types=1);
 
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 // We are going to use session variables so we need to enable sessions
 session_start();
 
@@ -46,18 +50,23 @@ function handleForm()
     // TODO: form related tasks (step 1)
          // Validation (step 2)
             $invalidFields = validate();
+            global $products;
             $items = [];
             $address = "";
             if (!empty($invalidFields)) {
-        // TODO: handle errors
             } else {
         // TODO: handle successful submission
                 $address = filter_input(INPUT_POST, "street") . " " . filter_input(INPUT_POST, "streetnumber") . "<br>" . filter_input(INPUT_POST, "city") . " " . filter_input(INPUT_POST, "zipcode");
-                echo "<h3>Your order is confirmed!</h3><br><h4>What you ordered: </h4><br>";
-                foreach ($items as $i => $item): 
-                    echo "<ul><li>" . $item . "</li></ul>";
+                foreach ($products as $i => $product):
+                    if (isset($_POST['products'][$i])) {
+                        array_push($items, $product['name']);
+                    }
                 endforeach;
-                echo "<h4>Your address:</h4><p>" . $address ."</p><br><h3>Thank you for shopping with us! See you in the future!</h3>";
+                echo "<h3>Your order is confirmed!</h3><br><h4>What you ordered: </h4><br><ul>";
+                foreach ($items as $i => $item): 
+                    echo "<li>" . $item . "</li>";
+                endforeach;
+                echo "</ul><h4>Your address:</h4><p>" . $address ."</p><br><h3>Thank you for shopping with us! See you in the future!</h3>";
     }}
 
 // TODO: replace this if by an actual check for the form to be submitted
