@@ -9,6 +9,11 @@ error_reporting(E_ALL);
 // We are going to use session variables so we need to enable sessions
 session_start();
 
+$user_street = ($_POST["street"]) ?? $_SESSION["user_street"];
+$user_streetnumber = ($_POST["streetnumber"]) ?? $_SESSION["user_streetnumber"];
+$user_city = ($_POST["city"]) ?? $_SESSION["user_city"];
+$user_zipcode = ($_POST["zipcode"]) ?? $_SESSION["user_zipcode"];
+
 // Use this function when you need to need an overview of these variables
 function whatIsHappening() {
     echo '<h2>$_GET</h2>';
@@ -45,11 +50,11 @@ function validate()
         }
     endforeach;
     $email = filter_input(INPUT_POST, "email");
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($email)) {
         array_push($incorrectFields, "email is not in a valid format");
     }
     $zipcode = filter_input(INPUT_POST, "zipcode");
-    if (!is_numeric($zipcode)) {
+    if (!is_numeric($zipcode) && !empty($zipcode)) {
         array_push($incorrectFields, "zipcode is not in a valid format");
     }
     return $incorrectFields;
@@ -86,6 +91,10 @@ function handleForm()
 // TODO: replace this if by an actual check for the form to be submitted
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     handleForm();
+    $_SESSION["user_street"] = filter_var($_POST["street"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $_SESSION["user_streetnumber"] = filter_var($_POST["streetnumber"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $_SESSION["user_city"] = filter_var($_POST["city"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    $_SESSION["user_zipcode"] = filter_var($_POST["zipcode"], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 }
 
 require 'form-view.php';

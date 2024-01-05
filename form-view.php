@@ -42,21 +42,21 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="street">Street:</label>
-                    <input type="text" name="street" id="street" class="form-control" value="<?php echo filter_input(INPUT_POST, "street");?>">
+                    <input type="text" name="street" id="street" class="form-control" value="<?php echo $user_street; ?>">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="streetnumber">Street number:</label>
-                    <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?php echo filter_input(INPUT_POST, "streetnumber");?>">
+                    <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?php echo $user_streetnumber; ?>">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="city">City:</label>
-                    <input type="text" id="city" name="city" class="form-control" value="<?php echo filter_input(INPUT_POST, "city");?>">
+                    <input type="text" id="city" name="city" class="form-control" value="<?php echo $user_city; ?>">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="zipcode">Zipcode</label>
-                    <input type="text" id="zipcode" name="zipcode" class="form-control" value="<?php echo filter_input(INPUT_POST, "zipcode");?>">
+                    <input type="text" id="zipcode" name="zipcode" class="form-control" value="<?php echo $user_zipcode; ?>">
                 </div>
             </div>
         </fieldset>
