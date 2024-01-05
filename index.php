@@ -36,38 +36,35 @@ $totalValue = 0;
 
 function validate()
 {
-    // TODO: This function will send a list of invalid fields back
-    return [];
 }
 
 function handleForm()
 {
-    // TODO: form related tasks (step 1)
-         // Validation (step 2)
-            $invalidFields = validate();
-            global $products;
-            $items = [];
-            $address = "";
-            if (!empty($invalidFields)) {
-                echo "<div class='alert alert-warning' role='alert'><p>Please fill the required fields: <p><ul>";
-                foreach ($invalidFields as $i => $field):
-                    echo "<li>". $field ."</li>";
-                endforeach;
-                echo "</ul></div>";
-            } else {
+    $errorMessages = validate();
+    global $products;
+    $items = [];
+    foreach ($products as $i => $product):
+        if (isset($_POST['products'][$i])) {
+            array_push($items, $product['name']);
+        }
+    endforeach;
+        if (empty($items)) {
+            echo "<div class='alert alert-warning' role='alert'><h3>Time paradox detected!</h3><br><p>You didn't select any items. Go grab your TARDIS and do some shopping!</p></div>";
+        } elseif (!empty($errorMessages)) {
+            echo "<div class='alert alert-warning' role='alert'><h3>Replicator detected! Please correct the following fields: </h3><ul>";
+            foreach ($errorMessages as $i => $error):
+                echo "<li>" . $error . "</li>";
+            endforeach;
+            echo "</ul></div>";
+        } else {
         // TODO: handle successful submission
-                $address = filter_input(INPUT_POST, "street") . " " . filter_input(INPUT_POST, "streetnumber") . "<br>" . filter_input(INPUT_POST, "city") . " " . filter_input(INPUT_POST, "zipcode");
-                foreach ($products as $i => $product):
-                    if (isset($_POST['products'][$i])) {
-                        array_push($items, $product['name']);
-                    }
-                endforeach;
-                echo "<div class='alert alert-success' role='alert'><h3>Your order is confirmed!</h3><br><h4>What you ordered: </h4><br><ul>";
-                foreach ($items as $i => $item): 
-                    echo "<li>" . $item . "</li>";
-                endforeach;
-                echo "</ul><h4>Your address:</h4><p>" . $address ."</p><br><h3>Thank you for shopping with us! See you in the future!</h3></div>";
-    }}
+            $address = filter_input(INPUT_POST, "street") . " " . filter_input(INPUT_POST, "streetnumber") . "<br>" . filter_input(INPUT_POST, "city") . " " . filter_input(INPUT_POST, "zipcode");
+            echo "<div class='alert alert-success' role='alert'><h3>Your order is confirmed!</h3><br><h4>What you ordered: </h4><ul>";
+            foreach ($items as $i => $item): 
+                echo "<li>" . $item . "</li>";
+            endforeach;
+            echo "</ul><h4>Your address:</h4><p>" . $address ."</p><br><h3>Thank you for shopping with us! See you in the future!</h3></div>";
+        }}
 
 // TODO: replace this if by an actual check for the form to be submitted
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
