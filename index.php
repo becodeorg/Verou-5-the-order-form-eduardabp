@@ -36,6 +36,23 @@ $totalValue = 0;
 
 function validate()
 {
+    $fields = ["email", "street", "streetnumber", "city", "zipcode"];
+    $incorrectFields = [];
+    foreach ($fields as $i => $field): 
+        $input = filter_input(INPUT_POST, $field);
+        if (empty($input)) {
+            array_push($incorrectFields, $field . " is required");
+        }
+    endforeach;
+    $email = filter_input(INPUT_POST, "email");
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        array_push($incorrectFields, "email is not in a valid format");
+    }
+    $zipcode = filter_input(INPUT_POST, "zipcode");
+    if (!is_numeric($zipcode)) {
+        array_push($incorrectFields, "zipcode is not in a valid format");
+    }
+    return $incorrectFields;
 }
 
 function handleForm()
