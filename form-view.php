@@ -80,6 +80,11 @@
     footer {
         text-align: center;
     }
+    .alert {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 </style>
 </body>
 </html>

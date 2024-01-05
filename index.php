@@ -14,6 +14,9 @@ $user_streetnumber = ($_POST["streetnumber"]) ?? $_SESSION["user_streetnumber"];
 $user_city = ($_POST["city"]) ?? $_SESSION["user_city"];
 $user_zipcode = ($_POST["zipcode"]) ?? $_SESSION["user_zipcode"];
 
+// Global variable to store the total value
+$totalValue = 0;
+
 // Use this function when you need to need an overview of these variables
 function whatIsHappening() {
     echo '<h2>$_GET</h2>';
@@ -36,8 +39,6 @@ $products = [
     ['name' => 'Neuralyzer', 'price' => 549.99],
     ['name' => 'Carbonite Freezing', 'price' => 499.99],
 ];
-
-$totalValue = 0;
 
 function validate()
 {
@@ -64,10 +65,11 @@ function handleForm()
 {
     $errorMessages = validate();
     global $products;
+    global $totalValue;
     $items = [];
     foreach ($products as $i => $product):
         if (isset($_POST['products'][$i])) {
-            array_push($items, $product['name']);
+            array_push($items, $product);
         }
     endforeach;
         if (empty($items)) {
@@ -81,9 +83,10 @@ function handleForm()
         } else {
         // TODO: handle successful submission
             $address = filter_input(INPUT_POST, "street") . " " . filter_input(INPUT_POST, "streetnumber") . "<br>" . filter_input(INPUT_POST, "city") . " " . filter_input(INPUT_POST, "zipcode");
-            echo "<div class='alert alert-success' role='alert'><h3>Your order is confirmed!</h3><br><h4>What you ordered: </h4><ul>";
+            echo "<div class='alert alert-success' role='alert'><h3>ALLONS-Y! Your order is confirmed!</h3><br><h4>What you ordered: </h4><ul>";
             foreach ($items as $i => $item): 
-                echo "<li>" . $item . "</li>";
+                echo "<li>" . $item['name'] . "</li>";
+                $totalValue += $item['price'];
             endforeach;
             echo "</ul><h4>Your address:</h4><p>" . $address ."</p><br><h3>Thank you for shopping with us! See you in the future!</h3></div>";
         }}
